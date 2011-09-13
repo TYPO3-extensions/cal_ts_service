@@ -1,0 +1,10 @@
+plugin.tx_cal_controller.display.mbl_newsevent {
+	# cat=News Event Service for Calendar Base/general/mblnewsevent-1; type=boolean; label=Use external plugin for news events?: Show news events using a plugin other than Calendar Base.
+	externalPlugin = 0
+
+	# cat=News Event Service for Calendar Base/general/mblnewsevent-2; type=integer; label=Page ID for news events: Individual news events are shown on this page. Only applicable if external plugins are enabled.	
+	externalPlugin.singleViewPid = 
+	
+	# cat=News Event Service for Calendar Base/general/mblnewsevent-3; type=string; label=URL parameters for news events: These parameters are used in addition to the Page ID when linking to an individual news event.
+	externalPlugin.additionalParams = tx_ttnews[tt_news]=###UID###
+}

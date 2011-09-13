@@ -1,0 +1,106 @@
+plugin.tx_cal_controller {
+	display {
+		mbl_newsevent {
+			# @description	This is the heart of the connection SQL. It will be used in conjunction with 
+			#				the view-where (findallWithinWhere, findAll and findWhere) to retrieve the according records.
+			event_select {
+				selectFields = tt_news.*, tx_mblnewsevent_from + tx_mblnewsevent_fromtime as tx_mblnewsevent_start, tx_mblnewsevent_to + tx_mblnewsevent_totime as tx_mblnewsevent_end
+			}
+			
+			# @description	This is the heart of the connection SQL. It will be used in conjunction with 
+			#				the view-where (findallWithinWhere, findAll and findWhere) to retrieve the according records plus their categories.
+			event_select_with_cat {
+				selectFields = tt_news.*,tt_news_cat_mm.uid_foreign, tx_mblnewsevent_from + tx_mblnewsevent_fromtime as tx_mblnewsevent_start, tx_mblnewsevent_to + tx_mblnewsevent_totime as tx_mblnewsevent_end
+				leftjoin = tt_news_cat_mm ON (tt_news.uid = tt_news_cat_mm.uid_local) JOIN tt_news_cat ON (tt_news_cat_mm.uid_foreign = tt_news_cat.uid)
+			}
+			
+			# @description	Configure the table the records come from.
+			pidTable = tt_news
+			
+			# @description	Define the where clause for the views: day, week, month, year, list, rss
+			#				Use ###START### and ###END### as marker to be replaced during runtime with the timeframe
+			findAllWithinWhere = tt_news.tx_mblnewsevent_isevent = 1 AND ((tx_mblnewsevent_from >= ###START### AND tx_mblnewsevent_from < ###END###) OR (tx_mblnewsevent_to < ###END### AND tx_mblnewsevent_to > ###START###)  OR (tx_mblnewsevent_to > ###END### AND tx_mblnewsevent_from < ###START###))
+			
+			# @description	Define the where clause for the ? view.
+			#				Use ###START### and ###END### as marker to be replaced during runtime with the timeframe
+			findAll =
+			
+			# @description	Define the where clause for the single event views: event, ics
+			#				Use ###START### and ###END### as marker to be replaced during runtime with the timeframe
+			findWhere = tt_news.uid = ###UID### AND tt_news.tx_mblnewsevent_isevent = 1
+			
+			# @description	Enable this to create a link to another page containing the single view of the external plugin.
+			#				Use ###DB_FIELD### to retrieve record related informations from the database (DB_FIELD is a placeholder)
+			externalPlugin = {$plugin.tx_cal_controller.display.mbl_newsevent.externalPlugin}
+			
+			externalPlugin {
+				
+				# @description	Define the pid for the external plugin single view
+				singleViewPid = {$plugin.tx_cal_controller.display.mbl_newsevent.externalPlugin.singleViewPid}
+				
+				# @description	Array containing the url paramter to be added to the url
+				additionalParams = {$plugin.tx_cal_controller.display.mbl_newsevent.externalPlugin.additionalParams}
+			}
+			
+			# @description	Enables the localization and/or versioning of the result record
+			enableLocalizationAndVersioning = 0
+
+			# @description	Define the field containing the timestamp for the start time
+			startTimeField = tx_mblnewsevent_start
+			
+			# @description	Define the field containing the timestamp for the end time
+			endTimeField = tx_mblnewsevent_end
+			
+			# @description	If there is no end time, you can define a default length (in minutes)
+			defaultLength = 0
+			
+			# @description	For a quick and easy integration, map your record fields to the standard event fields
+			#				You can always use ###DB_FIELD### (where DB_FIELD is a placeholder for a database row entry) to insert database values  
+			fieldMapping {
+				title = title
+				description = bodytext
+				location =
+				organizer =
+				image = image
+			}
+			
+			# @description	The template to be used with these records
+			template = EXT:cal_ts_service/template/ts.tmpl
+			
+			# @description	The header style class to be used
+			headerStyle = green_catheader
+			
+			# @description	The body style class to be used
+			bodyStyle = green_catbody
+			
+			# @description	The title in the legend description for these records
+			legendDescription = News Event
+			
+			search {
+				# @description	The fields, which are allowed to be searched through
+				searchEventFieldList = tt_news.title,tt_news.bodytext
+			}
+			
+			# @description	Define the SQL to retrieve the categories
+			cat_select {
+				selectFields = tt_news_cat.*,tt_news_cat_mm.uid_local
+				leftjoin = tt_news_cat_mm ON (tt_news_cat_mm.uid_foreign = tt_news_cat.uid)
+				andWhere = 
+			}
+			
+			# @description	The table containing the category records
+			catTable = tt_news_cat
+			
+			# @description	Retrieving and adopting the event configuration for the event view.
+			event {
+				event < plugin.tx_cal_controller.view.event.event
+				event {
+					# @description	The default image path is related to the tx_cal_{object type}. Therefore the path has to be overwritten
+					image.overridePath = uploads/pics/
+				}
+			}
+		}
+	}
+}
+
+calRSS.10.display < plugin.tx_cal_controller.display

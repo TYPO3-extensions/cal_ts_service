@@ -1,0 +1,9 @@
+plugin.tx_cal_controller.display.wec_sermons {
+	# cat=Sermons Service for Calendar Base/general/wecsermons-1; type=boolean; label=Use external plugin for sermons?: Show sermons using a plugin other than Calendar Base.
+	externalPlugin = 0
+
+	# cat=Sermons Service for Calendar Base/general/wecsermons-2; type=integer; label=Page ID for sermons: Individual sermons are shown on this page. Only applicable if external plugins are enabled.	
+	externalPlugin.singleViewPid = 
+	
+	# cat=Sermons Service for Calendar Base/general/wecsermons-3; type=string; label=URL Parameters for sermons: These parameters are used in addition to the Page ID when linking to an individual sermon.
+	externalPlugin.additionalParams = tx_wecsermons_pi1[showUid]=###UID###&tx_wecsermons_pi1[recordType]=tx_wecsermons_sermons

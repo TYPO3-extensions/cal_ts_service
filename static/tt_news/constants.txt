@@ -1,0 +1,10 @@
+plugin.tx_cal_controller.display.tt_news {
+	# cat=News Service for Calendar Base/general/ttnews-1; type=boolean; label=Use external plugin for news?: Show news articles using a plugin other than Calendar Base.
+	externalPlugin = 0
+
+	# cat=News Service for Calendar Base/general/ttnews-2; type=integer; label=Page ID for news: Individual news articles are shown on this page. Only applicable if external plugins are enabled.	
+	externalPlugin.singleViewPid = 
+	
+	# cat=News Service for Calendar Base/general/ttnews-3; type=string; label=URL parameters for news: These parameters are used in addition to the Page ID when linking to an individual news article.
+	externalPlugin.additionalParams = tx_ttnews[tt_news]=###UID###
+}

@@ -1,0 +1,10 @@
+plugin.tx_cal_controller.display.birthday {
+	# cat=Birthday Service for Calendar Base/general/birthday-1; type=boolean; label=Use external plugin for birthdays?: Show birthdays using a plugin other than Calendar Base.
+	externalPlugin = 0
+
+	# cat=Birthday Service for Calendar Base/general/birthday-2; type=integer; label=Page ID for birthdays: Individual birthdays are shown on this page. Only applicable if external plugins are enabled.	
+	externalPlugin.singleViewPid = 
+	
+	# cat=Birthday Service for Calendar Base/general/birthday-3; type=string; label=URL parameters for birthdays: These parameters are used in addition to the Page ID when linking to an individual birthday.
+	externalPlugin.additionalParams = 
+}

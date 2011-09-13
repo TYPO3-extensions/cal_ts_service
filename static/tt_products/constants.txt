@@ -1,0 +1,10 @@
+plugin.tx_cal_controller.display.tt_products {
+	# cat=Products Service for Calendar Base/general/ttproducts-1; type=boolean; label=Use external plugin for products?: Show products using a plugin other than Calendar Base.
+	externalPlugin = 0
+
+	# cat=Products Service for Calendar Base/general/ttproducts-2; type=integer; label=Page ID for products: Individual products are shown on this page. Only applicable if external plugins are enabled.	
+	externalPlugin.singleViewPid = 
+	
+	# cat=Products Service for Calendar Base/general/ttproducts-3; type=string; label=URL Parameters for products: These parameters are used in addition to the Page ID when linking to an individual product.
+	externalPlugin.additionalParams = tx_ttproducts_pi1[product]=###UID###
+}
