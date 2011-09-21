@@ -93,7 +93,7 @@ plugin.tx_cal_controller {
 				event < plugin.tx_cal_controller.view.event.event
 				event {
 					# @description	The default image path is related to the tx_cal_{object type}. Therefore the path has to be overwritten
-					image.overridePath = uploads/pics/
+					image.overridePath = uploads/tx_seminars/
 				}
 			}
 			# @description	Retrieving the event configuration for the event view.
@@ -101,7 +101,7 @@ plugin.tx_cal_controller {
 				event < plugin.tx_cal_controller.view.list.event
 				event {
 					# @description	The default image path is related to the tx_cal_{object type}. Therefore the path has to be overwritten
-					image.overridePath = uploads/pics/
+					image.overridePath = uploads/tx_seminars/
 				}
 			}
 			rss.event < plugin.tx_cal_controller.view.rss.event
