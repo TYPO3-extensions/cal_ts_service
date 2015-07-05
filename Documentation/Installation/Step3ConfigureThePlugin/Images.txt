@@ -1,0 +1,6 @@
+﻿.. |img-4|      image:: ../../Images/storage_page.png
+.. :align: left
+.. :border: 0
+.. :hspace: 12
+.. :name: Record Storage Page
+

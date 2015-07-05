@@ -1,0 +1,10 @@
+
+1.1.1
+--------------------------------
+
+::
+
+	* Replaced deprecated code
+	* Adjustments for new recurrence model
+	* Minor Bugfixes
+

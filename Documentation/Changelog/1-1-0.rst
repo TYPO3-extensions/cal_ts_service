@@ -1,0 +1,11 @@
+
+1.1.0
+--------------------------------
+
+::
+
+	* Updated to require Calendar Base 1.2.1 and greater.
+	* Added stdWrap to externalPlugin.additionalParams
+	* Added compatibility with mbl_newsevent 2.0.0.
+	* Minor bugfixes.
+

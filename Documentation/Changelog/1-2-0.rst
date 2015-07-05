@@ -1,0 +1,12 @@
+
+1.2.0
+--------------------------------
+
+::
+
+	* tx_serminars integration: 
+		Fix error if defaultLength is set  
+		adjust static TS to point to the correct picture path
+	* tt_news integration:
+		Support news of type “external URL”
+

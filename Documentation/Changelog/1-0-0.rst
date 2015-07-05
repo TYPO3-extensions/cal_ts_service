@@ -1,0 +1,8 @@
+
+1.0.0
+--------------------------------
+
+::
+
+	* Raised to stable after a couple months of real world usage.
+
