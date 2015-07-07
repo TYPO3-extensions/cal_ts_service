@@ -1,5 +1,7 @@
 <?php
+
 namespace TYPO3\CMS\CalTsService\Model;
+
 /**
  * *************************************************************
  * Copyright notice
@@ -22,7 +24,6 @@ namespace TYPO3\CMS\CalTsService\Model;
  * This copyright notice MUST APPEAR in all copies of the file!
  * *************************************************************
  */
-
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
@@ -31,18 +32,37 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  * @author Mario Matzulla <mario(at)matzullas.de>
  */
 class TypoScriptEventModel extends \TYPO3\CMS\Cal\Model\EventModel {
+	var $thisConf = Array ();
 	
-	var $thisConf;
-	
+	/**
+	 *
+	 * @param unknown $row        	
+	 * @param unknown $isException        	
+	 * @param unknown $serviceKey        	
+	 * @param unknown $conf        	
+	 */
 	public function __construct($row, $isException, $serviceKey, $conf = Array()) {
 		parent::__construct ( $row, false, $serviceKey );
 		$this->thisConf = $conf;
+		
+		// $this->conf is a linked variable.
+		// Let's duplicate it
+		$tempConf = $this->conf;
+		// Unset the link
+		unset ( $this->conf );
+		// And refill it again :)
+		$this->conf = $tempConf;
+		
 		$this->conf ['view.'] [$this->conf ['view'] . '.'] ['event.'] = array_merge ( $this->conf ['view.'] [$this->conf ['view'] . '.'] ['event.'], ( array ) $conf [$this->conf ['view'] . '.'] ['event.'] );
 		$this->isException = $isException;
 		$this->setType ( 'tx_cal_ts_service' );
 		$this->createEvent ( $row, $isException );
 	}
 	
+	/**
+	 *
+	 * @param unknown $row        	
+	 */
 	public function createEvent($row) {
 		$this->setType ( $this->serviceKey );
 		$this->row = $row;
@@ -94,10 +114,24 @@ class TypoScriptEventModel extends \TYPO3\CMS\Cal\Model\EventModel {
 		$this->externalPlugin = $this->thisConf ['externalPlugin'];
 	}
 	
+	/**
+	 *
+	 * @param unknown $template        	
+	 * @param unknown $rems        	
+	 * @param unknown $sims        	
+	 * @param unknown $view        	
+	 */
 	public function getCategoryHeaderStyle(&$template, &$rems, &$sims, $view) {
 		$sims ['###HEADERSTYLE###'] = $this->thisConf ['headerStyle'];
 	}
 	
+	/**
+	 *
+	 * @param unknown $template        	
+	 * @param unknown $rems        	
+	 * @param unknown $sims        	
+	 * @param unknown $view        	
+	 */
 	public function getCategoryBodyStyle(&$template, &$rems, &$sims, $view) {
 		$sims ['###BODYSTYLE###'] = $this->thisConf ['bodyStyle'];
 	}
@@ -116,42 +150,41 @@ class TypoScriptEventModel extends \TYPO3\CMS\Cal\Model\EventModel {
 		return $this->thisConf ['bodyStyle'];
 	}
 	
-	public function renderEventForDay() {
-		return $this->fillTemplate ( '###TEMPLATE_TS_EVENT_DAY###' );
-	}
-	
-	public function renderEventForWeek() {
-		return $this->fillTemplate ( '###TEMPLATE_TS_EVENT_WEEK###' );
-	}
-	
-	public function renderEventForAllDay() {
-		return $this->fillTemplate ( '###TEMPLATE_TS_EVENT_ALLDAY###' );
-	}
-	
-	public function renderEventForMonth() {
-		if ($this->isAllday ()) {
-			return $this->renderEventFor ( 'MONTH_ALLDAY' );
-		}
-		return $this->renderEventFor ( 'MONTH' );
-	}
-	
-	public function renderEventForYear() {
-		return $this->fillTemplate ( '###TEMPLATE_TS_EVENT_YEAR###' );
-	}
-	
+	/**
+	 *
+	 * @return string
+	 */
 	public function renderEvent() {
 		return $this->fillTemplate ( '###TEMPLATE_TS_EVENT###' );
 	}
 	
+	/**
+	 */
 	public function renderTomorrowsEvent() {
 		$this->isTomorrow = true;
-		return $this->fillTemplate ( '###TEMPLATE_TS_EVENT_TOMORROW###' );
+		$this->renderEventFor ( 'TOMORROW' );
 	}
 	
+	/**
+	 *
+	 * @param unknown $viewType        	
+	 * @return string
+	 */
 	public function renderEventFor($viewType) {
+		if ($this->row ['isFreeAndBusyEvent'] == 1) {
+			$viewType .= '_FNB';
+		}
+		if (substr ( $viewType, - 6 ) != 'ALLDAY' && ($this->isAllday () || $this->getStart ()->format ( '%Y%m%d' ) != $this->getEnd ()->format ( '%Y%m%d' ))) {
+			$subpartSuffix .= 'ALLDAY';
+		}
 		return $this->fillTemplate ( '###TEMPLATE_TS_EVENT_' . strtoupper ( $viewType ) . '###' );
 	}
 	
+	/**
+	 *
+	 * @param unknown $subpartMarker        	
+	 * @return string
+	 */
 	public function fillTemplate($subpartMarker) {
 		// $this->controller->piVars['ts_table'] = $this->thisConf['table'];
 		$cObj = &$this->controller->cObj;
@@ -164,19 +197,29 @@ class TypoScriptEventModel extends \TYPO3\CMS\Cal\Model\EventModel {
 		$sims = Array ();
 		$wrapped = Array ();
 		$this->getMarker ( $page, $sims, $rems, $wrapped );
-		// unset($this->controller->piVars['ts_table']);
-		$return = $this->finish ( $cObj->substituteMarkerArrayCached ( $page, $sims, $rems, $wrapped ) );
-		return $return;
+		return $this->finish ( $cObj->substituteMarkerArrayCached ( $page, $sims, $rems, $wrapped ) );
 	}
 	
+	/**
+	 *
+	 * @return unknown
+	 */
 	public function getSubheader() {
 		return $this->subheader;
 	}
 	
+	/**
+	 *
+	 * @param unknown $s        	
+	 */
 	public function setSubheader($s) {
 		$this->subheader = $s;
 	}
 	
+	/**
+	 *
+	 * @return \TYPO3\CMS\Cal\Model\CalDate
+	 */
 	public function getUntil() {
 		if (! isset ( $this->until ) || $this->until == 0) {
 			return new \TYPO3\CMS\Cal\Model\CalDate ( '00000101' );
@@ -184,14 +227,30 @@ class TypoScriptEventModel extends \TYPO3\CMS\Cal\Model\EventModel {
 		return $this->until;
 	}
 	
+	/**
+	 *
+	 * @return unknown
+	 */
 	public function getCategory() {
 		return $this->category;
 	}
 	
+	/**
+	 *
+	 * @param unknown $cat        	
+	 */
 	public function setCategory($cat) {
 		$this->category = $cat;
 	}
 	
+	/**
+	 *
+	 * @param unknown $template        	
+	 * @param unknown $sims        	
+	 * @param unknown $rems        	
+	 * @param unknown $wrapped        	
+	 * @param unknown $view        	
+	 */
 	public function getImageMarker(& $template, & $sims, & $rems, & $wrapped, $view) {
 		$tempConfig = $this->conf ['view.'] [$view . '.'] [$this->objectType . '.'] ['image.'];
 		$tempType = $this->conf ['view.'] [$view . '.'] [$this->objectType . '.'] ['image'];
@@ -226,13 +285,21 @@ class TypoScriptEventModel extends \TYPO3\CMS\Cal\Model\EventModel {
 		return $this->controller->pi_linkTP ( '|', $urlParams, $this->conf ['cache'], $this->thisConf ['externalPlugin.'] ['singleViewPid'] );
 	}
 	
+	/**
+	 *
+	 * @param unknown $currentParams        	
+	 */
 	public function addAdditionalSingleViewUrlParams(&$currentParams) {
 		$currentParams ['ts_table'] = str_replace ( '.', '', $this->row ['ts_key'] );
-		$currentParams ['type'] = $this->getType();
+		$currentParams ['type'] = $this->getType ();
 	}
 	
+	/**
+	 *
+	 * @return \TYPO3\CMS\CalTsService\Model\TypoScriptEventModel
+	 */
 	public function cloneEvent() {
-		$event = GeneralUtility::makeInstance ( get_class ( $this ), $this->getValuesAsArray (), $this->isException, $this->getType (), $this->thisConf );
+		$event = new \TYPO3\CMS\CalTsService\Model\TypoScriptEventModel ( $this->getValuesAsArray (), $this->isException, $this->getType (), $this->thisConf );
 		$event->setIsClone ( true );
 		return $event;
 	}
