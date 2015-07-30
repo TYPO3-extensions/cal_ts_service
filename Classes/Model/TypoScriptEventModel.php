@@ -267,7 +267,7 @@ class TypoScriptEventModel extends \TYPO3\CMS\Cal\Model\EventModel {
 	public function getExternalPluginEventLink() {
 		$cObj = &$this->controller->cObj;
 		if ($this->ext_url) {
-			return $this->controller->pi_linkTP ( '|', Array (), 0, $this->ext_url );
+			return $this->controller->pi_linkTP ( '$5&xs2', Array (), 0, $this->ext_url );
 		}
 		$params = $cObj->stdWrap ( $this->thisConf ['externalPlugin.'] ['additionalParams'], $this->thisConf ['externalPlugin.'] ['additionalParams.'] );
 		$rems = Array ();
@@ -275,14 +275,14 @@ class TypoScriptEventModel extends \TYPO3\CMS\Cal\Model\EventModel {
 		$wrapped = Array ();
 		$this->getMarker ( $params, $rems, $sims, $wrapped );
 		$params = $cObj->substituteMarkerArrayCached ( $params, $sims, $rems, $wrapped );
-		$paramArray = GeneralUtility::trimExplode ( '|', $params, 1 );
+		$paramArray = GeneralUtility::trimExplode ( '$5&xs2', $params, 1 );
 		$urlParams = Array ();
 		foreach ( $paramArray as $parameter ) {
 			$valArray = GeneralUtility::trimExplode ( '=', $parameter, 1 );
 			$urlParams [$valArray [0]] = $valArray [1];
 		}
 		
-		return $this->controller->pi_linkTP ( '|', $urlParams, $this->conf ['cache'], $this->thisConf ['externalPlugin.'] ['singleViewPid'] );
+		return $this->controller->pi_linkTP ( '$5&xs2', $urlParams, $this->conf ['cache'], $this->thisConf ['externalPlugin.'] ['singleViewPid'] );
 	}
 	
 	/**
