@@ -1,0 +1,8 @@
+
+2.0.1 - TYPO3 LTS 6.2 & TYPO3 7
+--------------------------------
+
+::
+
+	* Bug #68578  - Event-titles in cal has wrap before title, not around it
+

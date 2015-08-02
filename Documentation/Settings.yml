@@ -2,7 +2,7 @@ conf.py:
   copyright: 2010-2015
   project: TypoScript Service for Calendar Base
   version: 2.0
-  release: 2.0.0
+  release: 2.0.1
   latex_documents:
   - - Index
     - cal_ts_service.tex
