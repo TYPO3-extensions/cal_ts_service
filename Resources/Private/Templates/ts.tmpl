@@ -32,22 +32,59 @@
 <div class="###HEADERSTYLE###_allday"><!-- ###EVENT_LINK### start -->###TITLE###<!-- ###EVENT_LINK### end --></div>
 <!--###TEMPLATE_TS_EVENT_ALLDAY### end -->
 
+<!--###TEMPLATE_TS_EVENT_DAY_ALLDAY### begin -->
+<td>
+	<div class="vevent">
+		<div class="###HEADERSTYLE###_allday">
+	<!-- ###EVENT_LINK### start -->
+			<span class="summary">###TITLE###</span>
+			###FREQ###
+	<!-- ###EVENT_LINK### end -->
+		</div>
+	</div>
+</td>
+<!--###TEMPLATE_TS_EVENT_DAY_ALLDAY### end -->
+
 <!--###TEMPLATE_TS_EVENT_DAY### begin -->
-class="eventbg2 ###BODYSTYLE###">
-<div class="eventfont">
-	<div class="###HEADERSTYLE###">###STATUS###<b>###STARTTIME### - ###ENDTIME###</b></div>
-	<div class="padd">###EDIT_LINK###<!-- ###EVENT_LINK### start -->###TITLE###<!-- ###EVENT_LINK### end --></div>
+<div style="top: ###TOP###px; left: ***LEFT***%; width: ***WIDTH***%;" class="vevent ###HEADERSTYLE###">
+  <!-- ###EVENT_LINK### start -->
+      <dl style="height: ###LENGTH###px;">
+        <span class="popup">
+        	<span title="###MICROFORMAT_START###" class="dtstart"></span>
+        </span>
+        <dd>
+          <span class="summary">###TITLE###</span>
+        </dd>
+      </dl>
+    <!-- ###EVENT_LINK### end -->
 </div>
 <!--###TEMPLATE_TS_EVENT_DAY### end -->
 
 <!--###TEMPLATE_TS_EVENT_WEEK### begin -->
-class="eventbg2 ###BODYSTYLE###">
-<div class="eventfont">
-	<div class="###HEADERSTYLE###">###STATUS###<b>###STARTTIME### - ###ENDTIME###</b></div>
-	<div class="padd">###EDIT_LINK###<!-- ###EVENT_LINK### start -->###TITLE###<!-- ###EVENT_LINK### end --></div>
+<div style="top: ###TOP###px; left: ***LEFT***%; width: ***WIDTH***%;" class="vevent ###HEADERSTYLE###">
+<!-- ###EVENT_LINK### start -->
+  <dl style="height: ###LENGTH###px;">
+      <span class="popup">
+        <span title="###MICROFORMAT_START###" class="dtstart"></span>
+      </span>
+    <dd>
+      <span class="summary">###TITLE###</span>
+    </dd>
+  </dl>
+  <!-- ###EVENT_LINK### end -->
 </div>
-
 <!--###TEMPLATE_TS_EVENT_WEEK### end -->
+
+<!--###TEMPLATE_TS_WEEK_ALLDAY### begin -->
+<div class="vevent">
+	 <div class="###HEADERSTYLE###_allday">
+	<!-- ###EVENT_LINK### start -->
+		<span class="summary">###TITLE###</span>
+		###FREQ###
+	<!-- ###EVENT_LINK### end -->
+	</div>
+</div>
+<!--###TEMPLATE_TS_WEEK_ALLDAY### end -->
 
 <!--###TEMPLATE_TS_EVENT_MONTH### begin -->
 <div class="V9"><span class="###HEADERSTYLE###_bullet" >&bull;</span><span class="###HEADERSTYLE###_text"><!-- ###EVENT_LINK### start -->###STARTTIME###: ###TITLE###<!-- ###EVENT_LINK### end --></span></div>
