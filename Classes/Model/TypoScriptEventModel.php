@@ -53,7 +53,7 @@ class TypoScriptEventModel extends \TYPO3\CMS\Cal\Model\EventModel {
 		// And refill it again :)
 		$this->conf = $tempConf;
 		
-		$this->conf ['view.'] [$this->conf ['view'] . '.'] ['event.'] = array_merge ( $this->conf ['view.'] [$this->conf ['view'] . '.'] ['event.'], ( array ) $conf [$this->conf ['view'] . '.'] ['event.'] );
+		$this->conf ['view.'] [$this->conf ['view'] . '.'] ['event.'] = array_merge ( (array) $this->conf ['view.'] [$this->conf ['view'] . '.'] ['event.'], ( array ) $conf [$this->conf ['view'] . '.'] ['event.'] );
 		$this->isException = $isException;
 		$this->setType ( 'tx_cal_ts_service' );
 		$this->createEvent ( $row, $isException );
